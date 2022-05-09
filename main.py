@@ -1,17 +1,21 @@
 import mouse
 import keyboard
-import time
+import asyncio
+import os
 
-def Moveme():
+async def Moveme():
+    mouse.move(5, 5, absolute=False, duration=0.2)
+    mouse.move(-5, -5, absolute=False, duration=0.2)
+    await asyncio.sleep(20)
+
+def keyHook(info):
     while True:
-        print("mueve mouse")
-        mouse.move(5, 5, absolute=False, duration=0.2)
-        time.sleep(1)
-        mouse.move(-5, -5, absolute=False, duration=0.2)
+        if keyboard.is_pressed("q"):
+            print("chau")
+            os._exit(0) 
 
-        if keyboard.is_pressed('q'):
-            print("se apreto q")
-            break
+keyboard.hook(keyHook)
 
-Moveme()
+while True:
+    asyncio.run(Moveme())
 
